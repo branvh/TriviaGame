@@ -44,7 +44,7 @@ var trivia = [{
 //gameplay object
 var game = {
 
-	//gameplay variables
+    //gameplay variables
     currentTime: 0,
     counter: '',
     maxTime: 12,
@@ -87,12 +87,11 @@ var game = {
     },
     init: function() {
 
-    	//display all gameplay class items; hide all outcome display class items
-    	$('.gameplay').show();
-    	$('.outcome').hide();
+        //set game status = active
+        game.active = true;
 
-    	//set game status = active
-    	game.active = true;
+        //add click event listener
+        game.clickListener();
 
         //create a randomized question list
         game.questionOrder = game.randomOrder();
@@ -104,11 +103,12 @@ var game = {
         game.counter = '';
         game.currentItem = '';
 
-        //display default time - used function to ensure no hard-coded #s
-        document.getElementById('time').innerHTML = game.displayTime(game.maxTime);
-
         //reset game timer
         game.currentTime = game.maxTime;
+
+        //display all gameplay class items; hide all outcome display class items
+        $('.gameplay').show();
+        $('.outcome').hide();
 
         //reset score (correct answers) and incorrect answer count
         game.score = 0;
@@ -120,6 +120,18 @@ var game = {
         //update screen display
         game.diplayQuestion();
 
+    },
+    clickListener: function() {
+
+        $('.answer').on('click', function() {
+
+            game.answerCheck(this);
+
+        });
+
+    },
+    removeClickListener: function () {
+    	$('.answer').off('click');
     },
     startTimer: function() {
 
@@ -184,6 +196,9 @@ var game = {
     },
     answerCheck: function(selection) {
 
+        //temporarily remove event listener to prevent multiple clicks
+        game.removeClickListener();
+
         //capture selected item and current answer
         var selected = selection.textContent;
         var ans = game.currentItem['answer'];
@@ -207,14 +222,25 @@ var game = {
         //quickly display question outcome
         game.displayOutcome(message);
 
+        //add back event listener
+        game.clickListener();
+
         //move to next question, as appropriate
         game.nextQuestion();
 
     },
     displayOutcome: function(message) {
 
-        // show question response outcome for 1 second
-        $('#outcome').html(message).fadeIn().delay(1000).fadeOut()
+        //prevent questions from showing up after game ends..
+        if (game.currentTime > 2) {
+
+            //hide question, briefly
+            $('.questionlist').fadeOut().delay(2000).fadeIn();
+
+            // show question response outcome for 1 second
+            $('#outcome').html(message).fadeIn().delay(1000).fadeOut();
+        }
+
 
     },
     diplayQuestion: function() {
@@ -247,49 +273,50 @@ var game = {
         }
 
     },
-    nextQuestion: function () {
+    nextQuestion: function() {
 
-    	//don't display any more questions if the game is over OR we've run out of questions
-    	if (game.currentTime === 0 || (game.currentQuestion === trivia.length - 1)){
+        //don't display any more questions if the game is over OR we've run out of questions
+        if (game.currentTime === 0 || (game.currentQuestion === trivia.length - 1)) {
 
-    		//stop the timer first
-    		game.stopTimer();
+            //stop the timer first
+            game.stopTimer();
 
-    		//nothing else to do - so move to end game module
-    		game.endGame();
+            //nothing else to do - so move to end game module
+            game.endGame();
 
-    	} else {
+        } else if (game.currentTime > 1) {
+            //don't show question again if too little time remaining
 
-    		//move on to next question
-    		game.diplayQuestion();
+            //move on to next question
+            game.diplayQuestion();
 
-    	}
+        }
 
 
     },
     endGame: function() {
 
-    	// display all outcome class items; hide all gameplay class items
-    	$('.gameplay').hide();
+    	//remove click listener and/or ensure it was removed and not added twice
+    	game.removeClickListener();
 
-    	var timeComment = $('#time-element');
+        // display all outcome class items; hide all gameplay class items
+        $('.gameplay').hide();
 
-    	if (game.currentTime === 0){
+        var timeComment = $('#time-element');
 
-    		timeComment.html('Time is up!')
+        if (game.currentTime === 0) {
 
-    	}
-    	else {
+            timeComment.html('Time is up!')
 
-    		timeComment.html('You finished before the buzzer!');
+        } else {
 
-    	}
+            timeComment.html('You finished before the buzzer!');
 
-    	timeComment.show().delay(1000);
+        }
 
-    	$('.outcome').show();
-    	$('#correctAnswers').html('You had ' + '<em>' + game.score + '</em> correct, Tom Brady would be proud!');
-    	$('#incorrectAnswers').html('You had ' + '<em>' + game.incorrect + '</em> wrong, like a buckeye!');
+        $('.outcome').show();
+        $('#correctAnswers').html('You had ' + '<em>' + game.score + '</em> correct, Tom Brady would be proud!');
+        $('#incorrectAnswers').html('You had ' + '<em>' + game.incorrect + '</em> wrong, like a buckeye!');
     }
 };
 
@@ -300,11 +327,11 @@ $(document).ready(function() {
     game.init();
 
     //validate answer event listener
-    $('.answer').on('click', function() {
+    // $('.answer').on('click', function() {
 
-        game.answerCheck(this);
+    //     game.answerCheck(this);
 
-    });
+    // });
 
     //restart game event listener
     $('#reset').on('click', game.init);
@@ -314,17 +341,8 @@ $(document).ready(function() {
 
 /*TO DO LIST
 
-CONTENT
-
 
 ERRORS
-Why doesn't w/in click using game.answerCheck(this) return selected element and instead DOM object?
- Guard against multiple clicks...
-Styling...
-time briefly starts as undefined
-
-...delay before showing next question....otherwise, status lags
+delays can continue after the game ends...
 
 */
-
-

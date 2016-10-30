@@ -1,10 +1,11 @@
 body {
 
-	background: yellow;
+	background: rgb(251,208,25);
+	color: rgb(0,43,92);
 }
 
 .container-fluid {
-	background: blue;
+	background: white;
 	width: 80%;
 }
 
@@ -15,9 +16,40 @@ body {
 }
 
 .answer:hover {
-	background: yellow;
+	background: rgb(251,208,25);
+}
+
+#outcome-panel, #outcome {
+	
+	position: absolute;
+	bottom: 20px;
+
 }
 
 #outcome {
 	color: red;
+}
+
+#questionPanel{
+
+	height: 400px;
+	position: relative;
+	top: 50px;
+}
+
+body::after {
+  content: "";
+  background: url("../images/stadium.jpg") no-repeat center center fixed;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100%;
 }
