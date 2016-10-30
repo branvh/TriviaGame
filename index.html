@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Trivia Game!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron" id="questionPanel">
+                <!--Body content-->
+                <h1 class="text-center pageTitle">Maze Mania!</h1>
+
+                <div id="outcome-panel">
+                    <p class="outcome" id="time-element"></p>
+                    <p class="outcome" id="correctAnswers"></p>
+                    <p class="outcome" id="incorrectAnswers"></p>
+                    <button class="btn btn-danger outcome" id="reset">Reset</button>
+                </div>
+
+                <p class="questionTimer gameplay">Time Remaining: <span id="time"></span></p>
+                <ul class="questionlist gameplay">Question: <span id="question"></span>
+                    <li class="answer" id="a1"></li>
+                    <li class="answer" id="a2"></li>
+                    <li class="answer" id="a3"></li>
+                    <li class="answer" id="a4"></li>
+                </ul>
+                <p id="outcome"></p>
+            </div>
+        </div>
+    </div>
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script> -->
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+</body>
+
+</html>
