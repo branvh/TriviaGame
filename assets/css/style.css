@@ -8,10 +8,16 @@ body {
 	width: 80%;
 }
 
-#reset {
-	visibility: hidden;
-}
 
 .answer{
 	list-style-type: none;
+
+}
+
+.answer:hover {
+	background: yellow;
+}
+
+#outcome {
+	color: red;
 }
