@@ -1,0 +1,17 @@
+body {
+
+	background: yellow;
+}
+
+.container-fluid {
+	background: blue;
+	width: 80%;
+}
+
+#reset {
+	visibility: hidden;
+}
+
+.answer{
+	list-style-type: none;
+}
