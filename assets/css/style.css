@@ -19,15 +19,22 @@ body {
 	background: rgb(251,208,25);
 }
 
-#outcome-panel, #outcome {
+#outcome-panel, #outcome{
 	
 	position: absolute;
-	bottom: 20px;
+	bottom: 40px;
 
 }
 
-#outcome {
+#outcome, #correctAnswer {
 	color: red;
+}
+
+#correctAnswer {
+
+	position: absolute;
+	bottom: 15px;
+
 }
 
 #questionPanel{
